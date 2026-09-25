@@ -1,0 +1,22 @@
+# Visual Studio ملفات مؤقتة خاصة بـ
+.vs/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+build/
+out/
+
+# ملفات المستخدم والإعدادات المحلية
+*.user
+*.userosscache
+*.sln.docstates
+
+# ملفات الكومبيلر والمكتبات الناتجة
+*.obj
+*.pdb
+*.ilk
+*.exe
+*.dll
+*.lib
+*.log
