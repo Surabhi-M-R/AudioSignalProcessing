@@ -1,12 +1,19 @@
 ﻿#include <iostream>
 #include <string>
 #include <fstream>
+#include <algorithm>
 #include <windows.h>
 #include <mmsystem.h>
 #include <conio.h>
 #include <cstring>
 #pragma comment(lib, "winmm.lib")
 using namespace std;
+
+// Helper: convert string to lowercase for case-insensitive comparison
+string toLower(string s) {
+    transform(s.begin(), s.end(), s.begin(), ::tolower);
+    return s;
+}
 
 // Song Node in Small Playlist
 class SongNode {
@@ -399,11 +406,12 @@ public:
         cout << "\n[+] Created Playlist: " << name << endl;
     }
 
-    // Find playlist
+    // Find playlist (case-insensitive)
     PlaylistNode* findPlaylist(string name) {
         PlaylistNode* temp = head;
+        string nameLower = toLower(name);
         while (temp != nullptr) {
-            if (temp->name == name) {
+            if (toLower(temp->name) == nameLower) {
                 return temp;
             }
             temp = temp->next;
@@ -628,62 +636,73 @@ public:
 };
 
 void printMainMenu() {
-    cout << "\n============================================" << endl;
-    cout << "       QURAN PLAYLIST MANAGER" << endl;
-    cout << "============================================" << endl;
-    cout << " 1. Add New Playlist" << endl;
-    cout << " 2. Add Song to Playlist" << endl;
-    cout << " 3. Display All Playlists" << endl;
-    cout << " 4. Select & Play Playlist" << endl;
-    cout << " 5. Delete Song from Playlist" << endl;
-    cout << " 6. Delete Playlist" << endl;
-    cout << " 7. Save Playlist to File" << endl;
-    cout << " 8. Load Playlist from File" << endl;
-    cout << " 0. Exit" << endl;
-    cout << "============================================" << endl;
-    cout << "Your choice: ";
+    cout << "\n+--------------------------------------------+" << endl;
+    cout << "|       MUSIC PLAYLIST MANAGER               |" << endl;
+    cout << "+--------------------------------------------+" << endl;
+    cout << "|  1. Add New Playlist                       |" << endl;
+    cout << "|  2. Add Song to Playlist                   |" << endl;
+    cout << "|  3. Display All Playlists                  |" << endl;
+    cout << "|  4. Select & Play Playlist                 |" << endl;
+    cout << "|  5. Delete Song from Playlist              |" << endl;
+    cout << "|  6. Delete Playlist                        |" << endl;
+    cout << "|  7. Save Playlist to File                  |" << endl;
+    cout << "|  8. Load Playlist from File                |" << endl;
+    cout << "|  0. Exit                                   |" << endl;
+    cout << "+--------------------------------------------+" << endl;
+    cout << "Enter a number (0-8): ";
 }
 
 int main() {
+    SetConsoleOutputCP(CP_UTF8);
     MasterPlaylist myMusic;
     int choice;
     string playlistName, songTitle, path, filename;
 
-    cout << "\n╔════════════════════════════════════════════╗" << endl;
-    cout << "║   QURAN PLAYLIST MANAGER - ENHANCED        ║" << endl;
-    cout << "╚════════════════════════════════════════════╝" << endl;
+    cout << "\n+--------------------------------------------+" << endl;
+    cout << "|   MUSIC PLAYLIST MANAGER - ENHANCED        |" << endl;
+    cout << "+--------------------------------------------+" << endl;
     cout << "\nNew Features Added:" << endl;
-    cout << "  ✓ Loop Mode" << endl;
-    cout << "  ✓ Volume Control" << endl;
-    cout << "  ✓ Play Count Statistics" << endl;
-    cout << "  ✓ Save/Load Playlists" << endl;
+    cout << "  [*] Loop Mode" << endl;
+    cout << "  [*] Volume Control" << endl;
+    cout << "  [*] Play Count Statistics" << endl;
+    cout << "  [*] Save/Load Playlists" << endl;
     cout << "\nSupported formats: MP3, WAV, WMA\n" << endl;
 
-    // Creating default playlists
-    myMusic.addPlaylist("Al_Munshawy");
-    myMusic.addSongToPlaylist("Al_Munshawy", "Al-Fatihah",
-        "C:\\Users\\Lenovo\\Music\\001.mp3");
-        myMusic.addSongToPlaylist("Al_Munshawy", "Al-Baqarah",
-            "C:\\Users\\Lenovo\\Music\\002.mp3");
-        myMusic.addSongToPlaylist("Al_Munshawy", "Aal-E-Imran",
-            "C:\Users\Lenovo\Music\003.mp3");
-     myMusic.addPlaylist("Maher Al_muaiqly");
-    myMusic.addSongToPlaylist("Maher Al_muaiqly", "Al-Kahf",
-        "C:\\Users\\mohamed\\Downloads\\maherKahf.mp3");
-    myMusic.addSongToPlaylist("Maher Al_muaiqly", "Yasin",
-        "C:\\Users\\mohamed\\Downloads\\maheryasen.mp3");
+    // Creating default playlists with real audio files
+    myMusic.addPlaylist("Chill_Vibes");
+    myMusic.addSongToPlaylist("Chill_Vibes", "Sleepy Cat",
+        "C:\\Users\\Surabhi M R\\Downloads\\music\\mixkit-sleepy-cat-135.mp3");
+    myMusic.addSongToPlaylist("Chill_Vibes", "Serene View",
+        "C:\\Users\\Surabhi M R\\Downloads\\music\\mixkit-serene-view-443.mp3");
+    myMusic.addSongToPlaylist("Chill_Vibes", "Lullaby Night",
+        "C:\\Users\\Surabhi M R\\Downloads\\music\\mixkit-lullaby-night-531.mp3");
 
-    myMusic.addPlaylist("Yaser Al_dosary");
-    myMusic.addSongToPlaylist("Yaser Al_dosary", "Al-Fajr",
-        "C:\\Users\\Ali Hassan\\Desktop\\menshawy_Quran\\003.mp3");
-    myMusic.addSongToPlaylist("Yaser Al_dosary", "Qaf",
-        "C:\\Users\\mohamed\\Downloads\\yaserKaf.mp3");
+    myMusic.addPlaylist("Nature_Sounds");
+    myMusic.addSongToPlaylist("Nature_Sounds", "Forest Walk",
+        "C:\\Users\\Surabhi M R\\Downloads\\music\\mixkit-forest-walk-607.mp3");
+    myMusic.addSongToPlaylist("Nature_Sounds", "Forest Treasure",
+        "C:\\Users\\Surabhi M R\\Downloads\\music\\mixkit-forest-treasure-138.mp3");
+    myMusic.addSongToPlaylist("Nature_Sounds", "Zanarkand Forest",
+        "C:\\Users\\Surabhi M R\\Downloads\\music\\mixkit-zanarkand-forest-169.mp3");
+
+    myMusic.addPlaylist("Island_Party");
+    myMusic.addSongToPlaylist("Island_Party", "Island Beat",
+        "C:\\Users\\Surabhi M R\\Downloads\\music\\mixkit-island-beat-250.mp3");
+    myMusic.addSongToPlaylist("Island_Party", "Piano Reflections",
+        "C:\\Users\\Surabhi M R\\Downloads\\music\\mixkit-piano-reflections-22.mp3");
+    myMusic.addSongToPlaylist("Island_Party", "Voxscape",
+        "C:\\Users\\Surabhi M R\\Downloads\\music\\mixkit-voxscape-571.mp3");
 
     cout << "[INFO] Default playlists loaded successfully!\n" << endl;
 
     do {
         printMainMenu();
-        cin >> choice;
+        if (!(cin >> choice)) {
+            cin.clear();
+            cin.ignore(10000, '\n');
+            cout << "\n[!] Please enter a number (0-8), not text!" << endl;
+            continue;
+        }
         cin.ignore();
 
         switch (choice) {
@@ -800,10 +819,10 @@ int main() {
             if (myMusic.currentPlaylist != nullptr) {
                 myMusic.currentPlaylist->songs->stopPlayback();
             }
-            cout << "\n╔════════════════════════════════════════════╗" << endl;
-            cout << "║  Thanks for using Quran Playlist Manager!  ║" << endl;
-            cout << "║  May Allah bless you. Goodbye!              ║" << endl;
-            cout << "╚════════════════════════════════════════════╝\n" << endl;
+            cout << "\n+--------------------------------------------+" << endl;
+            cout << "|  Thanks for using Music Playlist Manager!  |" << endl;
+            cout << "|  Keep jamming and goodbye!                 |" << endl;
+            cout << "+--------------------------------------------+\n" << endl;
             break;
 
         default:
