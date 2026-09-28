@@ -1,4 +1,4 @@
-# Quran Playlist Manager (Data Structures Project) 🎧
+#  Playlist Manager (Data Structures Project) 🎧
 
 A high-performance C++ implementation focused on managing audio data streams through advanced data structures. Originally conceptualized as a general Audio Signal Processor.
 
